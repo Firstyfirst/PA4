@@ -48,12 +48,11 @@ public class Readability extends Application {
 
     public FlowPane initComponent(Stage primaryStage) {
         FlowPane root = new FlowPane();
-
+        // set flowpane apperence
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(10));
         root.setHgap(10);
         root.setVgap(10);
-
         // combobox to determine is file or url 
         fileOrUrl = new ComboBox<String>();
         String[] path = ReadFactory.getReadStategyType();
@@ -89,8 +88,12 @@ public class Readability extends Application {
     }
 
     private void comboBoxHandle(ActionEvent event) {
-        stategy = ReadFactory.setReadStategy(fileOrUrl.getValue());
-        System.out.println(stategy.toString());
+        try {
+            ClassLoader loader = Readability.class.getClassLoader();
+            stategy = (ReadStategy)loader.loadClass("readability.stategy." + fileOrUrl.getValue() + "Stategy").newInstance();
+            System.out.println(stategy.toString()); 
+        }
+        catch (ClassNotFoundException|InstantiationException|IllegalAccessException e) {}
     }
 
     private void calculationHandle(ActionEvent event) {
