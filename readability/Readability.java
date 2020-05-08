@@ -42,7 +42,7 @@ public class Readability extends Application {
     public void start(Stage primaryStage) {
         FlowPane flowPane = initComponent(primaryStage);
         primaryStage.setTitle("Flesh Readability Index");
-        primaryStage.setScene(new Scene(flowPane, 500, 200));
+        primaryStage.setScene(new Scene(flowPane, 500, 250));
         primaryStage.show();
     }
 
