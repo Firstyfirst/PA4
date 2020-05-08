@@ -11,14 +11,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import readability.stategy.ReadFactory;
+import readability.stategy.ReadStategy;
 
 public class Readability extends Application {
+
+    ComboBox<String> fileOrUrl;
 
     TextField textField;
 
@@ -27,6 +31,8 @@ public class Readability extends Application {
     URL objUrl;
 
     TextArea textArea;
+
+    ReadStategy stategy;
 
     public static void main(String[] args) {
         launch(args);
@@ -48,14 +54,21 @@ public class Readability extends Application {
         root.setHgap(10);
         root.setVgap(10);
 
-        Label fileOrUrl = new Label("File or URL name: ");
+        // combobox to determine is file or url 
+        fileOrUrl = new ComboBox<String>();
+        String[] path = ReadFactory.getReadStategyType();
+        fileOrUrl.setPromptText(path[0]);
+        fileOrUrl.getItems().addAll(path[0], path[1]);
+        stategy = ReadFactory.setReadStategy(path[0]);
+        EventHandler<ActionEvent> handler = this::comboBoxHandle;
+        fileOrUrl.setOnAction(handler);
         // apperence of textfield
         textField = new TextField();
         textField.setPrefWidth(160);
         // browse button
         Button calButton = new Button("Calculate !");
-        EventHandler<ActionEvent> handler = this::handleCalculation;
-        calButton.setOnAction(handler);
+        EventHandler<ActionEvent> handler2 = this::calculationHandle;
+        calButton.setOnAction(handler2);
         // file chooser for choose file from your computer
         FileChooser fileChooser = new FileChooser();
         Button selectButton = new Button("select file");
@@ -65,8 +78,8 @@ public class Readability extends Application {
         });
         // clear button
         Button clearButton = new Button("clear");
-        EventHandler<ActionEvent> handler2 = this::handleClear;
-        clearButton.setOnAction(handler2);
+        EventHandler<ActionEvent> handler3 = this::clearHandle;
+        clearButton.setOnAction(handler3);
         // text area
         textArea = new TextArea();
 
@@ -75,24 +88,19 @@ public class Readability extends Application {
         return root;
     }
 
-    private void handleCalculation(ActionEvent event) {
+    private void comboBoxHandle(ActionEvent event) {
+        stategy = ReadFactory.setReadStategy(fileOrUrl.getValue());
+        System.out.println(stategy.toString());
+    }
+
+    private void calculationHandle(ActionEvent event) {
         String filePaths = textField.getText();
-        // first index is line
-        // second index is sentence
-        // third index is syllabel
-        // fourth index is word
-        ArrayList<Double> number = IOTask.readFile(filePaths);
+        // first index is line, second index is sentence, third index is syllabel, fourth index is word
+        ArrayList<Double> number = stategy.read(filePaths);
         Calculation calculation = new Calculation(number.get(0), number.get(1), number.get(2), number.get(3));
         Double index = calculation.IndexFlesch();
         String level = calculation.Level(index);
-
-        String name;
-        if (IOTask.isUrlValid(filePaths)) {
-            name = "URL path";
-        }
-        else {
-            name = "File name";
-        }
+        String name = stategy.toString();
 
         textArea.setText(String.format("%-32s:  %s\n%-25s:  %.0f\n%-24s:  %.0f\n%-22s:  %.0f\n%-26s:  %.0f\n%-29s :  %.3f\n%-31s:  %s", 
             name, filePaths, "Number of Syllabels", number.get(2),
@@ -101,7 +109,7 @@ public class Readability extends Application {
             "Readability", level));
     }
 
-    private void handleClear(ActionEvent event) {
+    private void clearHandle(ActionEvent event) {
         textField.clear();
         textArea.clear();
     }
