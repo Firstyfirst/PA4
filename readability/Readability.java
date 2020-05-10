@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import readability.stategy.ReadFactory;
 import readability.stategy.ReadStategy;
 
 public class Readability extends Application {
@@ -34,6 +33,8 @@ public class Readability extends Application {
 
     ReadStategy stategy;
 
+    String type;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,7 +43,9 @@ public class Readability extends Application {
     public void start(Stage primaryStage) {
         FlowPane flowPane = initComponent(primaryStage);
         primaryStage.setTitle("Flesh Readability Index");
-        primaryStage.setScene(new Scene(flowPane, 500, 250));
+        Scene scene = new Scene(flowPane, 500, 250);
+        //scene.getStylesheets().add("readability/css/styleSheet.css");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
@@ -55,32 +58,37 @@ public class Readability extends Application {
         root.setVgap(10);
         // combobox to determine is file or url 
         fileOrUrl = new ComboBox<String>();
-        String[] path = ReadFactory.getReadStategyType();
-        fileOrUrl.setPromptText(path[0]);
-        fileOrUrl.getItems().addAll(path[0], path[1]);
-        stategy = ReadFactory.setReadStategy(path[0]);
+        fileOrUrl.setPromptText("-");
+        fileOrUrl.getItems().addAll("File", "Url");
+        fileOrUrl.setId("box");
+        stategy = ReadStategy.getInstance();
         EventHandler<ActionEvent> handler = this::comboBoxHandle;
         fileOrUrl.setOnAction(handler);
         // apperence of textfield
         textField = new TextField();
         textField.setPrefWidth(160);
+        textField.setId("box");
         // browse button
         Button calButton = new Button("Calculate !");
+        calButton.setId("box");
         EventHandler<ActionEvent> handler2 = this::calculationHandle;
         calButton.setOnAction(handler2);
         // file chooser for choose file from your computer
         FileChooser fileChooser = new FileChooser();
         Button selectButton = new Button("select file");
+        selectButton.setId("box");
         selectButton.setOnAction(event -> {
             selectedFile = fileChooser.showOpenDialog(primaryStage);
             textField.setText(selectedFile.getAbsolutePath());
         });
         // clear button
         Button clearButton = new Button("clear");
+        clearButton.setId("box");
         EventHandler<ActionEvent> handler3 = this::clearHandle;
         clearButton.setOnAction(handler3);
         // text area
         textArea = new TextArea();
+        textArea.setId("box");
 
         root.getChildren().addAll(fileOrUrl, textField, calButton, selectButton, clearButton, textArea);
 
@@ -88,18 +96,16 @@ public class Readability extends Application {
     }
 
     private void comboBoxHandle(ActionEvent event) {
-        try {
-            ClassLoader loader = Readability.class.getClassLoader();
-            stategy = (ReadStategy)loader.loadClass("readability.stategy." + fileOrUrl.getValue() + "Stategy").newInstance();
-            System.out.println(stategy.toString()); 
-        }
-        catch (ClassNotFoundException|InstantiationException|IllegalAccessException e) {}
+        textField.clear();
+        textArea.clear();
+        type = fileOrUrl.getValue();
+        
     }
 
     private void calculationHandle(ActionEvent event) {
         String filePaths = textField.getText();
         // first index is line, second index is sentence, third index is syllabel, fourth index is word
-        ArrayList<Double> number = stategy.read(filePaths);
+        ArrayList<Double> number = stategy.read(filePaths, type);
         Calculation calculation = new Calculation(number.get(0), number.get(1), number.get(2), number.get(3));
         Double index = calculation.IndexFlesch();
         String level = calculation.Level(index);

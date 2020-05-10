@@ -1,17 +1,74 @@
 package readability.stategy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public abstract class ReadStategy {
-    
+public class ReadStategy {
+
     Double countWord = 0.0;
     Double countLine = 0.0;
     Double countSentence = 0.0;
     Double countSyllables = 0.0;
 
-    public abstract ArrayList<Double> read(String path);
+    private static ReadStategy readStategy = null;
 
-    public abstract String toString();
+    private ReadStategy() {}
+
+    public static ReadStategy getInstance() {
+        if (readStategy == null)
+            readStategy = new ReadStategy();
+        return readStategy;
+    }
+
+    public ArrayList<Double> read(String path, String strategy) {
+        Scanner scanner = null;
+        String txt = path.substring(path.length() - 4).toLowerCase();
+        if (txt.equals(".txt")) {
+            if (strategy.equals("Url")) {
+                try {
+                    scanner = new Scanner(new URL(path).openStream());
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            else if (strategy.equals("File")) { 
+                try {
+                    scanner = new Scanner(new File(path));
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        } 
+        else error("Wrong type !!");
+    
+        while (scanner.hasNextLine()) {
+            countAll(scanner.nextLine());
+        }
+ 
+        ArrayList<Double> strList = new ArrayList<Double>();
+        strList.add(countLine);
+        strList.add(countSentence);
+        strList.add(countSyllables);
+        strList.add(countWord);
+
+        return strList;
+    }
+
+
+    public String toString(String stategy) {
+        if (stategy.equals("File")) return "File name";
+        return "URL path"; 
+    }
 
     public void error(String message) {
         System.out.println(message);
