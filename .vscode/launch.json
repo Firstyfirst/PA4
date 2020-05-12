@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Readability",
+            "request": "launch",
+            "mainClass": "src.readability.Readability",
+            "projectName": "PA4_fb35d86f",
+            "vmArgs": "--module-path /java/javafx-sdk-11.0.2/lib --add-modules javafx.controls"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - IOTask",
             "request": "launch",
             "mainClass": "readability.IOTask",
@@ -22,8 +30,7 @@
             "name": "Debug (Launch)-Readability<PA4_fb35d86f>",
             "request": "launch",
             "mainClass": "readability.Readability",
-            "projectName": "PA4_fb35d86f",
-            "vmArgs": "--module-path /java/javafx-sdk-11.0.2/lib --add-modules javafx.controls"
+            "projectName": "PA4_fb35d86f"
         }
     ]
 }

@@ -1,28 +1,17 @@
-package readability;
+package src.readability;
+
+import src.readability.stategy.ReadStategy;
 
 public class Calculation {
 
-    double line;
-
-    double sentence;
-
-    double syllabel;
-
-    double word;
-
-    public Calculation(double line, double sentence, double syllabel, double word) {
-        this.line = line;
-        this.sentence = sentence;
-        this.syllabel = syllabel;
-        this.word = word;
-    }
-
-    public Double IndexFlesch() {
-        double index = 206.835 - 84.6 * (this.syllabel / this.word) - 1.015 * (this.word / this.sentence);
+    public Double indexFlesch(ReadStategy rd) {
+        
+        double index = 206.835 - 84.6 * (rd.getSyllables() / rd.getWords())
+                - 1.015 * (rd.getWords() / rd.getSentences());
         return index;
     }
 
-    public String Level(double index) {
+    public String level(double index) {
         if (index > 100) return "4th grade student (elementary school)";
         else if (index > 90) return "5th grade student";
         else if (index > 80) return "6th grade student";
