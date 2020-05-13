@@ -12,6 +12,8 @@
 
     - Download javafx and set it in IDE.
 
-# Main Feature
+# How to use
 
-    ![program](<img src="https://sv1.picz.in.th/images/2020/05/13/Um0hLl.jpg" alt="Um0hLl.jpg" border="0" />)
+    ![program](D:\java\PA4\src\readability\picture)
+
+    
