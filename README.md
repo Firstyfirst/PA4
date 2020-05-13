@@ -14,6 +14,14 @@
 
 # How to use
 
-    ![program](D:\java\PA4\src\readability\picture)
+    - file or url : enter file path or url link of text in this box
+
+    - calculate button : click to compute and show readability index, number of syllables, number of words, 
+                         
+                         number of sentences, number of lines
+
+    - select file button : click to select file from your PC
+
+    - clear button : click to clear all showing text.
 
     
