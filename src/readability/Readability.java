@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 
 import src.readability.strategy.*;
 /**
+ * 
  * the main class for make GUI and run
+ * 
  */
 public class Readability extends Application {
     /** the area that can enter file path or url link */

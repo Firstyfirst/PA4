@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 /**
+ * 
  * read text from file or url link
+ * 
  */
 public class ReadStrategy {
     /** number of word */

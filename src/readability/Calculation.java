@@ -2,7 +2,9 @@ package src.readability;
 
 import src.readability.strategy.ReadStrategy;
 /**
- * calculate the index flesch and convert to flesch level 
+ * 
+ * calculate the index flesch and convert to flesch level
+ *  
  */
 public class Calculation {
     /**

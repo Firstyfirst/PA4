@@ -1,6 +1,8 @@
 package src.readability.strategy;
 /**
+ * 
  * count the syllable and sentence
+ * 
  */
 public class Counter {
     /** contain the state when count syllable */
