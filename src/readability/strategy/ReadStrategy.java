@@ -78,7 +78,7 @@ public class ReadStrategy {
         
         Counter counter = new Counter();
         if (!line.equals("")) {
-            String[] wordList = line.split("[.,()_/:!?;]|\s|\"");
+            String[] wordList = line.split("[.,()_/:!?;]|\\s|\"");
             // count syllable
             for(String word: wordList) {
                 int n = counter.countSyllable(word.toLowerCase());

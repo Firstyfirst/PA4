@@ -14,14 +14,14 @@
 
 # How to use
 
-    - file or url : enter file path or url link of text in this box
+    - file or url        : enter file path or url link of text in this box
 
-    - calculate button : click to compute and show readability index, number of syllables, number of words, 
+    - calculate button   : click to compute and show readability index, number of syllables, number of words, 
                          
-                         number of sentences, number of lines
+                           number of sentences, number of lines
 
     - select file button : click to select file from your PC
 
-    - clear button : click to clear all showing text.
+    - clear button       : click to clear all showing text.
 
     
