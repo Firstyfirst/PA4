@@ -15,7 +15,7 @@
 # How to use
 
 <p align = "center">
-    <img width="550" height="250" src="src\readability\picture\picture.png" alt="Application picture" />
+    <img src="src\readability\picture\picture.png" alt="Application picture" />
 </p>
 
     - file or url        : enter file path or url link of text in this box
