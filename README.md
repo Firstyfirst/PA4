@@ -14,7 +14,7 @@
 
 # How to use
 <p align = "center">
-    <img src="src\readability\picture\picture.jpg" alt="Application picture" />
+    <img src="D:\java\PA4\src\readability\picture\picture.jpg" alt="picture" />
 
 </p>
 
