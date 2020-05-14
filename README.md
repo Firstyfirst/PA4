@@ -13,11 +13,9 @@
     - Download javafx and set it in IDE.
 
 # How to use
-
 <p align = "center">
     <img src="src\readability\picture\picture.png" alt="Application picture" />
 </p>
-
     - file or url        : enter file path or url link of text in this box
 
     - calculate button   : click to compute and show readability index, number of syllables, number of words, 
